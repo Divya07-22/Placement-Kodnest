@@ -271,3 +271,14 @@ export function getHistoryById(id) {
     const history = getHistory();
     return history.find(item => item.id === id);
 }
+
+export function updateHistoryEntry(id, updates) {
+    const history = getHistory();
+    const index = history.findIndex(item => item.id === id);
+    if (index !== -1) {
+        history[index] = { ...history[index], ...updates };
+        localStorage.setItem('jdHistory', JSON.stringify(history));
+        return true;
+    }
+    return false;
+}

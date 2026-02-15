@@ -87,6 +87,22 @@ Complete job description analysis with heuristic intelligence:
   - View/Delete functionality
   - Works completely offline
 
+### **Task 6: Interactive Results & Exports** ✅ **NEW!**
+Enhanced analysis experience with user interaction:
+- **Skill Confidence Toggles**:
+  - "I know this" (Green) vs "Need practice" (Orange)
+  - Persisted per analysis in history
+- **Live Scoring Engine**:
+  - Base score + dynamic adjustments
+  - +2 for known skills, -2 for practice areas
+  - Real-time circular progress updates
+- **Export Suite**:
+  - Copy to Clipboard: 7-Day Plan, Checklist, Interview Questions
+  - Download as TXT: Complete analysis report
+- **Action Next**:
+  - Smart suggestion box highlighting top 3 weak skills
+  - "Start Day 1 plan" call to action
+
 ---
 
 ## ✨ Features
