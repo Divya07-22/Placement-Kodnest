@@ -146,10 +146,16 @@ Intelligent context layer for targeted preparation:
 - **Interview Prep**: 10 likely questions based on JD requirements
 - **History Tracking**: Save and review past analyses
 
-### Company Intel & Round Mapping (NEW!)
-- **Company Intel**: Heuristic analysis of company size, type (Enterprise vs Startup), and hiring focus
-- **Round Mapping**: Dynamic interview roadmap (4 rounds for Enterprise, 3 for Startups) tailored to your target
-- **Contextual Tips**: "Why this round?" explanations for every stage
+### 6. Company Intel & Round Mapping (New)
+- **Heuristic Company Analysis**: Automatically detects "Enterprise" vs "Startup" based on company name.
+- **Dynamic Interview Roadmap**: Generates a 3-4 round interview process tailored to the company type.
+- **Round-Specific Tips**: Provides "Why this round matters" context and specific focus areas.
+
+### 7. Core Hardening (New)
+- **Strict Data Validation**: Ensures JDs are sufficient length for quality analysis.
+- **Score Stability**: Base scores remain fixed while you toggle skill confidence.
+- **Robust Persistence**: Auto-recovery from corrupted history data.
+- **Offline Capable**: All logic runs client-side with no external API dependencies.
 
 ### Navigation
 - **Sidebar**: Quick access to all sections

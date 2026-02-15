@@ -12,8 +12,24 @@ export default function Resources() {
     }, []);
 
     const loadHistory = () => {
-        const data = getHistory();
-        setHistory(data);
+        try {
+            const data = getHistory();
+            // Filter out corrupted entries (missing ID or timestamp)
+            const validData = data.filter(item => item && item.id && item.createdAt);
+
+            if (validData.length !== data.length) {
+                // If we filtered some out, update localStorage to clean it up
+                console.warn('Removed corrupted history entries');
+                localStorage.setItem('jdHistory', JSON.stringify(validData));
+            }
+
+            setHistory(validData);
+        } catch (error) {
+            console.error('Failed to load history:', error);
+            setHistory([]);
+            // Optional: Backup and clear if critically corrupted
+            // localStorage.removeItem('jdHistory');
+        }
     };
 
     const handleDelete = (id) => {

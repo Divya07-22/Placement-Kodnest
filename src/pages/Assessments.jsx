@@ -26,45 +26,63 @@ export default function Assessments() {
         });
     };
 
+    const [error, setError] = useState('');
+
     const handleAnalyze = (e) => {
         e.preventDefault();
+
+        // Strict Validation: JD Length > 200 chars
+        if (formData.jdText.trim().length < 200) {
+            setError('This JD is too short to analyze deeply. Please paste the full job description (at least 200 characters) for better output.');
+            return;
+        }
+
+        setError('');
         setIsAnalyzing(true);
 
         // Simulate analysis delay for better UX
         setTimeout(() => {
-            // Extract skills
-            const extractedSkills = extractSkills(formData.jdText);
+            try {
+                // Extract skills
+                const extractedSkills = extractSkills(formData.jdText);
 
-            // Calculate readiness score
-            const readinessScore = calculateReadinessScore(
-                formData.jdText,
-                formData.company,
-                formData.role,
-                extractedSkills
-            );
+                // Calculate readiness score
+                // Ensure we capture baseScore explicitly
+                const baseScore = calculateReadinessScore(
+                    formData.jdText,
+                    formData.company,
+                    formData.role,
+                    extractedSkills
+                );
 
-            // Generate checklist, plan, and questions
-            const checklist = generateChecklist(extractedSkills);
-            const plan = generate7DayPlan(extractedSkills);
-            const questions = generateInterviewQuestions(extractedSkills);
+                // Generate checklist, plan, and questions
+                const checklist = generateChecklist(extractedSkills);
+                const plan = generate7DayPlan(extractedSkills);
+                const questions = generateInterviewQuestions(extractedSkills);
 
-            // Prepare analysis data
-            const analysisData = {
-                company: formData.company,
-                role: formData.role,
-                jdText: formData.jdText,
-                extractedSkills,
-                readinessScore,
-                checklist,
-                plan,
-                questions
-            };
+                // Prepare analysis data with strict schema
+                const analysisData = {
+                    company: formData.company || '',
+                    role: formData.role || '',
+                    jdText: formData.jdText,
+                    extractedSkills,
+                    baseScore, // Fixed score from analysis
+                    finalScore: baseScore, // Initial final score matches base
+                    checklist,
+                    plan,
+                    questions
+                };
 
-            // Save to history
-            saveToHistory(analysisData);
+                // Save to history
+                saveToHistory(analysisData);
 
-            // Navigate to results with data
-            navigate('/dashboard/results', { state: analysisData });
+                // Navigate to results with data
+                navigate('/dashboard/results', { state: analysisData });
+            } catch (err) {
+                console.error("Analysis Error:", err);
+                setError(err.message || "An error occurred during analysis.");
+                setIsAnalyzing(false);
+            }
         }, 800);
     };
 
@@ -151,8 +169,8 @@ Responsibilities:
                             placeholder="Paste the complete job description here..."
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none resize-none"
                         />
-                        <p className="text-sm text-gray-500 mt-1">
-                            {formData.jdText.length} characters
+                        <p className={`text-sm mt-1 ${error ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                            {error ? `Error: ${error}` : `${formData.jdText.length} characters`}
                         </p>
                     </div>
 

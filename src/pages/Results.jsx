@@ -34,7 +34,18 @@ export default function Results() {
             }
 
             setSkillConfidenceMap(initialMap);
-            setLiveScore(initialData.liveScore || initialData.readinessScore || 0);
+
+            // Determine base score (backwards compatibility)
+            const baseScore = initialData.baseScore !== undefined ? initialData.baseScore : (initialData.readinessScore || 0);
+
+            // Calculate initial live score based on map
+            let modifier = 0;
+            Object.values(initialMap).forEach(val => {
+                if (val === 'know') modifier += 2;
+                if (val === 'practice') modifier -= 2;
+            });
+
+            setLiveScore(Math.max(0, Math.min(100, baseScore + modifier)));
         }
     }, [initialData]);
 
@@ -43,6 +54,9 @@ export default function Results() {
         const newMap = { ...skillConfidenceMap, [skill]: status };
         setSkillConfidenceMap(newMap);
 
+        // Determine base score
+        const baseScore = initialData.baseScore !== undefined ? initialData.baseScore : (initialData.readinessScore || 0);
+
         // Calculate new score: Base + (Knows * 2) - (Practices * 2)
         let modifier = 0;
         Object.values(newMap).forEach(val => {
@@ -50,14 +64,15 @@ export default function Results() {
             if (val === 'practice') modifier -= 2;
         });
 
-        const newScore = Math.max(0, Math.min(100, initialData.readinessScore + modifier));
+        const newScore = Math.max(0, Math.min(100, baseScore + modifier));
         setLiveScore(newScore);
 
         // Persist changes
         if (historyId) {
             updateHistoryEntry(historyId, {
                 skillConfidenceMap: newMap,
-                liveScore: newScore
+                finalScore: newScore, // Save final score
+                readinessScore: newScore // Update legacy field for compatibility
             });
         }
     };
@@ -197,7 +212,8 @@ ${questions.map((q, i) => `${i + 1}. ${q}`).join('\n')}
         data: 'Databases',
         cloudDevOps: 'Cloud & DevOps',
         testing: 'Testing',
-        general: 'General'
+        general: 'General',
+        other: 'Key Skills'
     };
 
     // Action Next Component
@@ -385,8 +401,8 @@ ${questions.map((q, i) => `${i + 1}. ${q}`).join('\n')}
                                                     <button
                                                         onClick={() => handleConfidenceChange(skill, 'know')}
                                                         className={`px-2 py-1 rounded flex items-center gap-1 transition-colors ${skillConfidenceMap[skill] === 'know'
-                                                                ? 'bg-green-600 text-white shadow-sm'
-                                                                : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                                                            ? 'bg-green-600 text-white shadow-sm'
+                                                            : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
                                                             }`}
                                                     >
                                                         <Check className="w-3 h-3" />
@@ -395,8 +411,8 @@ ${questions.map((q, i) => `${i + 1}. ${q}`).join('\n')}
                                                     <button
                                                         onClick={() => handleConfidenceChange(skill, 'practice')}
                                                         className={`px-2 py-1 rounded flex items-center gap-1 transition-colors ${skillConfidenceMap[skill] === 'practice'
-                                                                ? 'bg-orange-500 text-white shadow-sm'
-                                                                : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                                                            ? 'bg-orange-500 text-white shadow-sm'
+                                                            : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
                                                             }`}
                                                     >
                                                         <X className="w-3 h-3" />

@@ -22,7 +22,11 @@ export function extractSkills(jdText) {
         }
     });
 
-    return Object.keys(extracted).length > 0 ? extracted : { general: ['General fresher stack'] };
+    const fallbackSkills = {
+        other: ['Communication', 'Problem Solving', 'Basic Coding', 'Projects']
+    };
+
+    return Object.keys(extracted).length > 0 ? extracted : fallbackSkills;
 }
 
 export function calculateReadinessScore(jdText, company, role, extractedSkills) {
@@ -72,7 +76,7 @@ export function generateChecklist(extractedSkills) {
         ],
         round3: [
             hasSkill('web') ? 'Prepare to explain your web development projects in detail' : 'Prepare project explanations',
-            hasSkill('web') && hasSkill('web').includes('React') ? 'Deep dive into React: Hooks, State Management, Performance' : 'Review your tech stack',
+            hasSkill('web') && extractedSkills.web.some(s => s.includes('React')) ? 'Deep dive into React: Hooks, State Management, Performance' : 'Review your tech stack',
             hasSkill('data') ? 'Be ready to write SQL queries and explain database design' : 'Learn basic SQL',
             hasSkill('cloudDevOps') ? 'Explain your DevOps/Cloud experience with examples' : 'Understand deployment basics',
             'Prepare STAR format answers for project challenges',
@@ -353,19 +357,54 @@ export function saveToHistory(analysisData) {
 
     // Enrich with Company Intel & Round Mapping if present
     let finalData = { ...analysisData };
-    if (analysisData.company) {
-        const intel = getCompanyIntel(analysisData.company);
-        const roundMapping = generateRoundMapping(intel.type, analysisData.extractedSkills);
-        finalData = { ...finalData, companyIntel: intel, roundMapping };
+
+    // Strict Defaults
+    finalData.company = finalData.company || '';
+    finalData.role = finalData.role || '';
+    finalData.jdText = finalData.jdText || '';
+
+    // Ensure scores exist
+    if (finalData.baseScore === undefined) finalData.baseScore = finalData.readinessScore || 0;
+    if (finalData.finalScore === undefined) finalData.finalScore = finalData.readinessScore || 0;
+
+    // Ensure Skill Confidence Map exists
+    finalData.skillConfidenceMap = finalData.skillConfidenceMap || {};
+
+    // Generate Company Intel if missing but company name exists
+    if (finalData.company && !finalData.companyIntel) {
+        finalData.companyIntel = getCompanyIntel(finalData.company);
+    }
+
+    // Generate Round Mapping if missing
+    if (!finalData.roundMapping) {
+        const type = finalData.companyIntel ? finalData.companyIntel.type : 'Startup';
+        finalData.roundMapping = generateRoundMapping(type, finalData.extractedSkills);
     }
 
     const entry = {
         id: Date.now().toString(),
         createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         ...finalData
     };
+
+    // Unshift to beginning
     history.unshift(entry);
-    localStorage.setItem('jdHistory', JSON.stringify(history));
+
+    // Safety cap: keep last 50 entries to prevent localStorage overflow
+    if (history.length > 50) history.pop();
+
+    try {
+        localStorage.setItem('jdHistory', JSON.stringify(history));
+    } catch (e) {
+        console.error('Failed to save history to localStorage', e);
+        // Fallback: try removing old entries if quota exceeded
+        if (history.length > 1) {
+            const smallerHistory = history.slice(0, 20);
+            localStorage.setItem('jdHistory', JSON.stringify(smallerHistory));
+        }
+    }
+
     return entry.id;
 }
 
