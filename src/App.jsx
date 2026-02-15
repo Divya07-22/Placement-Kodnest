@@ -8,6 +8,8 @@ import Assessments from './pages/Assessments';
 import Resources from './pages/Resources';
 import Profile from './pages/Profile';
 import Results from './pages/Results';
+import TestChecklist from './pages/TestChecklist';
+import ShipLock from './pages/ShipLock';
 
 function App() {
   return (
@@ -22,6 +24,11 @@ function App() {
           <Route path="resources" element={<Resources />} />
           <Route path="profile" element={<Profile />} />
         </Route>
+
+        {/* Verification Pages */}
+        <Route path="/prp/07-test" element={<TestChecklist />} />
+        <Route path="/prp/08-ship" element={<ShipLock />} />
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

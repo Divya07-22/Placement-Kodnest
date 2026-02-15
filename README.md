@@ -118,6 +118,26 @@ Intelligent context layer for targeted preparation:
   - Vertical timeline visualization for interview rounds
   - Fully persisted in history
   - "Demo Mode" disclaimer for transparency
+  - "Why this matters" tooltips
+
+### **Task 8: System Hardening** ✅
+Robustness and reliability improvements:
+- **Input Validation**: Minimum character limits and empty state handling
+- **Deep Fallback**: "General" skill set generator for non-technical JDs
+- **Score Stability**: Deterministic scoring logic (no random jumps)
+- **Crash Prevention**: Error boundaries for checklist generation (React bug fix)
+
+### **Task 9: Verification Module** ✅ **NEW!**
+Built-in quality assurance and shipping control:
+- **Test Checklist (`/prp/07-test`)**:
+  - 10-point system verification list
+  - localStorage persistence for progress tracking
+  - Visual progress bar and status indicators
+- **Ship Lock (`/prp/08-ship`)**:
+  - Conditional access logic (Blocks access until 10/10 tests pass)
+  - "Ready to Ship" celebration screen upon completion
+  - Strict quality gate for production deployment
+
 
 ---
 
@@ -156,6 +176,11 @@ Intelligent context layer for targeted preparation:
 - **Score Stability**: Base scores remain fixed while you toggle skill confidence.
 - **Robust Persistence**: Auto-recovery from corrupted history data.
 - **Offline Capable**: All logic runs client-side with no external API dependencies.
+
+### 8. Verification & Shipping (New)
+- **Built-in Checklist**: Track system health with a persistent 10-point test list.
+- **Production Lock**: Prevents shipping usage until all quality checks are verified.
+- **Quality Gate**: Ensures high reliability before "Go Live".
 
 ### Navigation
 - **Sidebar**: Quick access to all sections
