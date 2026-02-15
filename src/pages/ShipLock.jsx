@@ -107,10 +107,10 @@ const ShipLock = () => {
 
                 <div className="flex flex-col gap-4">
                     <button
-                        className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-6 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300"
-                        onClick={() => window.alert('🚀 Initiating Deployment Sequence...\n\n(This is where the CI/CD trigger would go!)')}
+                        className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-6 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+                        onClick={() => navigate('/prp/proof')}
                     >
-                        Deploy to Production Now
+                        Proceed to Final Submission
                     </button>
 
                     <button

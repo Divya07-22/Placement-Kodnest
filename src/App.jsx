@@ -10,6 +10,7 @@ import Profile from './pages/Profile';
 import Results from './pages/Results';
 import TestChecklist from './pages/TestChecklist';
 import ShipLock from './pages/ShipLock';
+import ProofPage from './pages/ProofPage';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         {/* Verification Pages */}
         <Route path="/prp/07-test" element={<TestChecklist />} />
         <Route path="/prp/08-ship" element={<ShipLock />} />
+        <Route path="/prp/proof" element={<ProofPage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
