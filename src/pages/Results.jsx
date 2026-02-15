@@ -44,16 +44,6 @@ export default function Results() {
         setSkillConfidenceMap(newMap);
 
         // Calculate new score: Base + (Knows * 2) - (Practices * 2)
-        // Starting from the ORIGINAL base score (initialData.readinessScore)
-        // assuming the base score calculation didn't factor this in.
-        // Logic:
-        // Base 35-100.
-        // User says "I know": +2
-        // User says "Practice": -2
-
-        // We need to calculate modifier relative to the "neutral" state?
-        // Requirement says: "Start from base readinessScore (already computed). Then: +2 for each skill marked "I know" -2 for each skill marked "Need practice""
-
         let modifier = 0;
         Object.values(newMap).forEach(val => {
             if (val === 'know') modifier += 2;
@@ -168,7 +158,7 @@ ${questions.map((q, i) => `${i + 1}. ${q}`).join('\n')}
         );
     }
 
-    const { company, role, extractedSkills, checklist, plan, questions } = initialData;
+    const { company, role, extractedSkills, checklist, plan, questions, companyIntel, roundMapping } = initialData;
 
     const CircularProgress = ({ value }) => {
         const percentage = value;
@@ -247,6 +237,82 @@ ${questions.map((q, i) => `${i + 1}. ${q}`).join('\n')}
         );
     };
 
+    // Company Intel Component
+    const CompanyIntelCard = ({ intel }) => {
+        if (!intel) return null;
+        return (
+            <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-6 mb-6">
+                <div className="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 className="text-lg font-bold text-gray-900">{intel.name}</h3>
+                        <div className="flex items-center gap-2 mt-1">
+                            <span className="bg-indigo-100 text-primary text-xs px-2 py-0.5 rounded-full font-medium">{intel.type}</span>
+                            <span className="text-xs text-gray-500">{intel.size}</span>
+                        </div>
+                    </div>
+                    <div className="bg-white p-2 rounded-full shadow-sm">
+                        <Target className="w-5 h-5 text-primary" />
+                    </div>
+                </div>
+                <div>
+                    <h4 className="text-sm font-semibold text-gray-900 mb-1">Typical Hiring Focus</h4>
+                    <p className="text-sm text-gray-700 leading-relaxed">{intel.focus}</p>
+                </div>
+                <div className="mt-3 pt-3 border-t border-indigo-100">
+                    <p className="text-xs text-indigo-400 italic">
+                        Demo Mode: Company intel generated heuristically.
+                    </p>
+                </div>
+            </div>
+        );
+    };
+
+    // Round Mapping Component
+    const RoundTimeline = ({ rounds }) => {
+        if (!rounds) return null;
+        return (
+            <div className="bg-white rounded-lg shadow p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+                    <Calendar className="w-6 h-6 text-primary" />
+                    Interview Rounds
+                </h3>
+                <div className="space-y-0">
+                    {rounds.map((round, idx) => (
+                        <div key={idx} className="relative pl-8 pb-8 last:pb-0">
+                            {/* Timeline Line */}
+                            {idx !== rounds.length - 1 && (
+                                <div className="absolute left-[11px] top-6 bottom-0 w-0.5 bg-gray-200"></div>
+                            )}
+                            {/* Timeline Dot */}
+                            <div className="absolute left-0 top-1 w-6 h-6 bg-indigo-50 border-2 border-primary rounded-full flex items-center justify-center text-xs font-bold text-primary">
+                                {idx + 1}
+                            </div>
+
+                            <div>
+                                <h4 className="text-base font-bold text-gray-900">{round.title}</h4>
+                                <p className="text-sm text-gray-600 mt-1 mb-2 font-medium">{round.focus}</p>
+                                <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                    <p className="text-xs text-gray-500 mb-2 italic">
+                                        <span className="font-semibold not-italic text-gray-700">Why this round? </span>
+                                        {round.why}
+                                    </p>
+                                    <ul className="space-y-1">
+                                        {round.tips.map((tip, i) => (
+                                            <li key={i} className="text-xs text-gray-700 flex items-start gap-1.5">
+                                                <span className="text-primary">•</span>
+                                                {tip}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    };
+
     return (
         <div className="space-y-6 pb-12 relative">
             {/* Toast Notification */}
@@ -287,6 +353,9 @@ ${questions.map((q, i) => `${i + 1}. ${q}`).join('\n')}
 
                 {/* Left Column - Score & Skills */}
                 <div className="lg:col-span-1 space-y-6">
+                    {/* Company Intel Card (NEW) */}
+                    <CompanyIntelCard intel={companyIntel} />
+
                     {/* Readiness Score */}
                     <div className="bg-white rounded-lg shadow p-6">
                         <h3 className="text-xl font-semibold text-gray-900 mb-4">Readiness Score</h3>
@@ -345,6 +414,9 @@ ${questions.map((q, i) => `${i + 1}. ${q}`).join('\n')}
 
                 {/* Right Column - Plan & Content */}
                 <div className="lg:col-span-2 space-y-6">
+
+                    {/* Round Mapping (NEW) */}
+                    <RoundTimeline rounds={roundMapping} />
 
                     {/* 7-Day Plan */}
                     <div className="bg-white rounded-lg shadow p-6">

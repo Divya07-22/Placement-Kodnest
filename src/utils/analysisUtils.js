@@ -251,12 +251,118 @@ export function generateInterviewQuestions(extractedSkills) {
     return questions.slice(0, 10);
 }
 
+// Company Intel Heuristics
+export function getCompanyIntel(companyName) {
+    if (!companyName) return null;
+
+    const name = companyName.toLowerCase();
+    const enterpriseList = ['google', 'amazon', 'microsoft', 'infosys', 'tcs', 'wipro', 'accenture', 'hcl', 'oracle', 'ibm', 'capgemini', 'deloitte', 'cognizant', 'mindtree', 'tech mahindra', 'flipkart', 'walmart', 'jpmorgan', 'goldman sachs', 'morgan stanley', 'adobe', 'salesforce', 'sap', 'cisco', 'intel'];
+    const startupList = ['zomato', 'swiggy', 'cred', 'zerodha', 'razorpay', 'paytm', 'ola', 'uber', 'urban company', 'meesho', 'cars24', 'sharechat', 'dream11', 'physicswallah', 'lenskart', 'nykaa', 'zepto', 'blinkit'];
+
+    let type = 'Startup'; // Default
+    let size = 'Small (<200)';
+    let focus = 'Practical problem solving, building features, and deep tech stack knowledge.';
+
+    if (enterpriseList.some(c => name.includes(c))) {
+        type = 'Enterprise';
+        size = 'Large (2000+)';
+        focus = 'Structured process focusing on DSA, Core CS fundamentals, and Aptitude.';
+    } else if (startupList.some(c => name.includes(c))) {
+        type = 'Mid-size';
+        size = 'Mid-size (200-2000)';
+        focus = 'System design, product sense, and scalable engineering practices.';
+    }
+
+    return {
+        name: companyName,
+        industry: 'Technology Services', // Default guess
+        type,
+        size,
+        focus
+    };
+}
+
+export function generateRoundMapping(companyType, extractedSkills) {
+    const hasSkill = (category) => extractedSkills[category] && extractedSkills[category].length > 0;
+
+    if (companyType === 'Enterprise') {
+        return [
+            {
+                id: 1,
+                title: 'Online Assessment',
+                focus: 'Aptitude + DSA (Easy/Medium)',
+                why: 'To filter thousands of applicants efficiently.',
+                tips: ['Focus on time management', 'Practice quantitative aptitude', 'Solve standard array/string problems']
+            },
+            {
+                id: 2,
+                title: 'Technical Interview 1',
+                focus: 'DSA + Core CS Fundamentals',
+                why: 'To test your problem-solving logic and code quality.',
+                tips: ['Explain your thought process', 'Write clean code on paper/whiteboard', 'Know time complexities']
+            },
+            {
+                id: 3,
+                title: 'Technical Interview 2 / Managerial',
+                focus: 'Projects + Behavioral + Basics',
+                why: 'To check depth of knowledge and project ownership.',
+                tips: ['Know your resume inside out', 'Prepare STAR format stories', 'Be ready for "Why this company?"']
+            },
+            {
+                id: 4,
+                title: 'HR Round',
+                focus: 'Culture Fit + Logistics',
+                why: 'To ensure cultural fit and discuss logistics.',
+                tips: ['Be honest and confident', 'Research company values', 'Prepare questions for the interviewer']
+            }
+        ];
+    } else {
+        // Startup / Mid-size pattern
+        const rounds = [
+            {
+                id: 1,
+                title: 'Practical / Machine Coding',
+                focus: hasSkill('web') ? 'Build a small feature/App' : 'Algorithmic Problem Solving',
+                why: 'To see if you can actually build what you claim.',
+                tips: ['Write modular code', 'Handle edge cases', 'Showcase your stack expertise (React/Node)']
+            },
+            {
+                id: 2,
+                title: 'Technical Deep Dive',
+                focus: 'System Design + Stack Depth',
+                why: 'To discuss your engineering decisions and trade-offs.',
+                tips: ['Justify your tech choices', 'Discuss scalability', 'Deep dive into your best project']
+            }
+        ];
+
+        // Add culture round
+        rounds.push({
+            id: 3,
+            title: 'Founder / Culture Fit',
+            focus: 'Product Sense + Ownership',
+            why: 'To see if you align with the mission and pace.',
+            tips: ['Show passion for the product', 'Demonstrate adaptability', 'Ask smart product questions']
+        });
+
+        return rounds;
+    }
+}
+
 export function saveToHistory(analysisData) {
     const history = JSON.parse(localStorage.getItem('jdHistory') || '[]');
+
+    // Enrich with Company Intel & Round Mapping if present
+    let finalData = { ...analysisData };
+    if (analysisData.company) {
+        const intel = getCompanyIntel(analysisData.company);
+        const roundMapping = generateRoundMapping(intel.type, analysisData.extractedSkills);
+        finalData = { ...finalData, companyIntel: intel, roundMapping };
+    }
+
     const entry = {
         id: Date.now().toString(),
         createdAt: new Date().toISOString(),
-        ...analysisData
+        ...finalData
     };
     history.unshift(entry);
     localStorage.setItem('jdHistory', JSON.stringify(history));

@@ -103,6 +103,22 @@ Enhanced analysis experience with user interaction:
   - Smart suggestion box highlighting top 3 weak skills
   - "Start Day 1 plan" call to action
 
+
+### **Task 7: Company Intel & Round Mapping** ✅ **NEW!**
+Intelligent context layer for targeted preparation:
+- **Heuristic Company Engine**:
+  - Classifies companies (Enterprise/Startup/Mid-size)
+  - Infers hiring focus (DSA vs Practical) based on type
+- **Dynamic Round Mapping**:
+  - **Enterprise Path**: 4 Rounds (Assessment → Tech 1 → Tech 2 → HR)
+  - **Startup Path**: 3 Rounds (Practical → Deep Dive → Culture)
+  - **"Why this matters"**: Contextual tips for each round
+- **UI Architecture**:
+  - Dedicated Company Intel Data Card
+  - Vertical timeline visualization for interview rounds
+  - Fully persisted in history
+  - "Demo Mode" disclaimer for transparency
+
 ---
 
 ## ✨ Features
@@ -129,6 +145,11 @@ Enhanced analysis experience with user interaction:
 - **Preparation Planning**: Round-wise checklist and 7-day study plan
 - **Interview Prep**: 10 likely questions based on JD requirements
 - **History Tracking**: Save and review past analyses
+
+### Company Intel & Round Mapping (NEW!)
+- **Company Intel**: Heuristic analysis of company size, type (Enterprise vs Startup), and hiring focus
+- **Round Mapping**: Dynamic interview roadmap (4 rounds for Enterprise, 3 for Startups) tailored to your target
+- **Contextual Tips**: "Why this round?" explanations for every stage
 
 ### Navigation
 - **Sidebar**: Quick access to all sections
