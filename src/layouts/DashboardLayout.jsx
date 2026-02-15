@@ -9,7 +9,7 @@ export default function DashboardLayout() {
         { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
         { name: 'Practice', path: '/dashboard/practice', icon: Code },
         { name: 'Assessments', path: '/dashboard/assessments', icon: FileText },
-        { name: 'Resources', path: '/dashboard/resources', icon: BookOpen },
+        { name: 'History', path: '/dashboard/resources', icon: BookOpen },
         { name: 'Profile', path: '/dashboard/profile', icon: User },
     ];
 
@@ -29,8 +29,8 @@ export default function DashboardLayout() {
                                 key={item.path}
                                 to={item.path}
                                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
-                                        ? 'bg-indigo-50 text-primary font-medium'
-                                        : 'text-gray-700 hover:bg-gray-100'
+                                    ? 'bg-indigo-50 text-primary font-medium'
+                                    : 'text-gray-700 hover:bg-gray-100'
                                     }`}
                             >
                                 <Icon className="w-5 h-5" />
