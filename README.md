@@ -1,125 +1,56 @@
-# KodNest Premium Build System
+# Placement Readiness Platform
 
-A calm, intentional, and coherent design system for serious B2C product companies. Built with React.js and a strict design philosophy that prioritizes clarity, consistency, and confidence.
+A comprehensive web application to help students prepare for campus placements through practice problems, mock interviews, and progress tracking.
 
-![Design System Preview](https://img.shields.io/badge/Status-Production%20Ready-success)
 ![React](https://img.shields.io/badge/React-18.3-blue)
-![Vite](https://img.shields.io/badge/Vite-7.3-purple)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.x-38bdf8)
+![React Router](https://img.shields.io/badge/React_Router-6.x-red)
 
-## Design Philosophy
+## 🚀 Live Demo
 
-**Calm. Intentional. Coherent. Confident.**
+**Production URL**: [https://placement-kodnest.vercel.app](https://placement-kodnest.vercel.app)
 
-This is not a student project. This design system embodies the principles of serious B2C product design:
+## ✨ Features
 
-- **No flashy elements** – No gradients, no glassmorphism, no neon colors
-- **No animation noise** – Subtle, purposeful transitions only
-- **No visual drift** – Every component feels like it was designed by one mind
-- **Maximum clarity** – Clean typography, generous whitespace, predictable layouts
+### Landing Page
+- **Hero Section**: Eye-catching headline with call-to-action
+- **Features Grid**: Three key features with icons
+  - 📝 Practice Problems - Solve coding challenges
+  - 🎥 Mock Interviews - Simulate real interviews
+  - 📊 Track Progress - Monitor improvement with analytics
+- **Responsive Footer**: Copyright information
 
-## Color System
+### Dashboard
+- **Sidebar Navigation**: Quick access to all sections
+  - Dashboard - Overview and statistics
+  - Practice - Coding challenges
+  - Assessments - Skill evaluation
+  - Resources - Study materials
+  - Profile - User settings
+- **Header**: Branding and user avatar
+- **Stats Cards**: Visual progress indicators
 
-A strictly limited palette of 4 colors:
+## 🎨 Design System
 
-| Color | Hex | Usage |
-|-------|-----|-------|
-| **Background** | `#F7F6F3` | Off-white canvas |
-| **Primary Text** | `#111111` | All text content |
-| **Accent** | `#8B0000` | Primary actions, deep red |
-| **Success** | `#4A6741` | Muted green for confirmations |
+### Color Scheme
+- **Primary Color**: `hsl(245, 58%, 51%)` (Indigo/Purple)
+- **Gradient Background**: Indigo to Purple
+- **Clean UI**: Modern, professional interface
 
-## Typography
+### Technology Stack
+- **Frontend**: React 18.3
+- **Styling**: Tailwind CSS
+- **Routing**: React Router DOM
+- **Icons**: Lucide React
+- **Build Tool**: Vite
 
-- **Headings**: Crimson Pro (Serif) – Large, confident, generous spacing
-- **Body**: Inter (Sans-serif) – 16–18px, line-height 1.6–1.8
-- **Max width**: 720px for optimal readability
-- **No decorative fonts** – Only two font families across the entire system
-
-## Spacing System
-
-Consistent scale based on 8px increments:
-
-```
-8px  → --space-xs
-16px → --space-sm
-24px → --space-md
-40px → --space-lg
-64px → --space-xl
-```
-
-**No random spacing** like 13px or 27px. Whitespace is part of the design.
-
-## Global Layout Structure
-
-Every page follows this predictable structure:
-
-```
-┌─────────────────────────────────────────────┐
-│ [Top Bar]                                   │
-├─────────────────────────────────────────────┤
-│ [Context Header]                            │
-├─────────────────────────────────────────────┤
-│ [Primary Workspace] │ [Secondary Panel]     │
-│        70%          │       30%             │
-├─────────────────────────────────────────────┤
-│ [Proof Footer]                              │
-└─────────────────────────────────────────────┘
-```
-
-### Top Bar
-- **Left**: Project name
-- **Center**: Progress indicator (Step X / Y)
-- **Right**: Status badge (Not Started / In Progress / Shipped)
-
-### Context Header
-- Large serif headline
-- 1-line subtext
-- Clear purpose, no hype language
-
-### Primary Workspace (70% width)
-- Main product interaction area
-- Clean cards, predictable components
-- No crowding
-
-### Secondary Panel (30% width)
-- Step explanation (short)
-- Copyable prompt box
-- Action buttons with calm styling
-
-### Proof Footer
-- Persistent bottom checklist
-- Requires user proof input for completion
-
-## Component Library
-
-### Core Components
-
-- **TopBar** – Project navigation and status
-- **ContextHeader** – Page headline and context
-- **SecondaryPanel** – Step guidance and actions
-- **ProofFooter** – Completion tracking
-- **Card** – Content container with subtle border
-- **Button** – Primary (solid red) and Secondary (outlined)
-- **Input** – Clean borders, clear focus state
-- **ErrorState** – Explains what went wrong + how to fix
-- **EmptyState** – Provides next action
-
-### Component Rules
-
-- Same hover effect everywhere (180ms ease-in-out)
-- Same border radius everywhere (2px)
-- No drop shadows on cards
-- Balanced padding using spacing system
-- Predictable, calm interactions
-
-## Getting Started
+## 📦 Installation
 
 ### Prerequisites
-
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 
-### Installation
+### Setup
 
 ```bash
 # Clone the repository
@@ -137,145 +68,141 @@ npm run dev
 
 The application will be available at `http://localhost:5173`
 
-### Build for Production
+## 🏗️ Project Structure
+
+```
+placement-readiness/
+├── src/
+│   ├── layouts/
+│   │   └── DashboardLayout.jsx    # Dashboard shell with sidebar
+│   ├── pages/
+│   │   ├── LandingPage.jsx        # Home page
+│   │   ├── Dashboard.jsx          # Dashboard overview
+│   │   ├── Practice.jsx           # Practice problems
+│   │   ├── Assessments.jsx        # Skill assessments
+│   │   ├── Resources.jsx          # Study materials
+│   │   └── Profile.jsx            # User profile
+│   ├── App.jsx                    # Router configuration
+│   ├── main.jsx                   # Entry point
+│   └── index.css                  # Tailwind directives
+├── tailwind.config.js             # Tailwind configuration
+├── vite.config.js                 # Vite configuration
+└── package.json                   # Dependencies
+```
+
+## 🛣️ Routes
+
+| Route | Component | Description |
+|-------|-----------|-------------|
+| `/` | LandingPage | Home page with hero and features |
+| `/dashboard` | Dashboard | Overview with statistics |
+| `/dashboard/practice` | Practice | Coding challenges |
+| `/dashboard/assessments` | Assessments | Skill evaluation |
+| `/dashboard/resources` | Resources | Study materials |
+| `/dashboard/profile` | Profile | User settings |
+
+## 🎯 Key Components
+
+### LandingPage
+- Hero section with "Ace Your Placement" headline
+- Features grid with 3 cards
+- "Get Started" button navigates to dashboard
+- Footer with copyright
+
+### DashboardLayout
+- Sidebar with 5 navigation links
+- Each link has a lucide-react icon
+- Header with "Placement Prep" branding
+- User avatar placeholder
+- Main content area with `<Outlet />`
+
+### Dashboard
+- Statistics cards showing:
+  - Problems Solved: 42
+  - Mock Interviews: 8
+  - Success Rate: 85%
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Visit [vercel.com/new](https://vercel.com/new)
+3. Import your repository
+4. Deploy with one click
+
+### Manual Build
 
 ```bash
+# Build for production
 npm run build
+
+# Preview production build
+npm run preview
 ```
 
-## Project Structure
+## 🔧 Configuration
 
-```
-kodnest-placement/
-├── src/
-│   ├── components/
-│   │   ├── TopBar.jsx
-│   │   ├── ContextHeader.jsx
-│   │   ├── SecondaryPanel.jsx
-│   │   ├── ProofFooter.jsx
-│   │   └── UIComponents.jsx
-│   ├── App.jsx
-│   ├── index.css          # Complete design system
-│   └── main.jsx
-├── index.html
-├── package.json
-└── README.md
-```
-
-## Design Tokens
-
-All design tokens are defined as CSS variables in `src/index.css`:
-
-```css
-:root {
-  /* Colors */
-  --color-bg: #F7F6F3;
-  --color-text-primary: #111111;
-  --color-accent: #8B0000;
-  --color-success: #4A6741;
-  
-  /* Spacing */
-  --space-xs: 8px;
-  --space-sm: 16px;
-  --space-md: 24px;
-  --space-lg: 40px;
-  --space-xl: 64px;
-  
-  /* Typography */
-  --font-serif: 'Crimson Pro', Georgia, serif;
-  --font-sans: 'Inter', sans-serif;
-  
-  /* Interaction */
-  --transition-speed: 180ms;
-  --transition-easing: ease-in-out;
+### Tailwind Config
+```javascript
+theme: {
+  extend: {
+    colors: {
+      primary: 'hsl(245, 58%, 51%)',
+    },
+  },
 }
 ```
 
-## Usage Examples
+### Environment Variables
+No environment variables required for basic setup.
 
-### Creating a Page
+## 📱 Responsive Design
 
-```jsx
-import { TopBar, ContextHeader, SecondaryPanel, ProofFooter } from './components';
-import { Card, Button, Input } from './components/UIComponents';
+- Mobile-first approach
+- Responsive grid layouts
+- Adaptive navigation
+- Touch-friendly interface
 
-function MyPage() {
-  return (
-    <div className="app-container">
-      <TopBar 
-        projectName="My Project" 
-        currentStep={1} 
-        totalSteps={5} 
-        status="In Progress" 
-      />
-      
-      <ContextHeader 
-        headline="Build Your Feature"
-        subtext="Follow the steps to complete this task."
-      />
-      
-      <div className="main-workspace">
-        <div className="primary-workspace">
-          <Card>
-            <h3>Your Content Here</h3>
-            <Input placeholder="Enter details" />
-            <Button variant="primary">Submit</Button>
-          </Card>
-        </div>
-        
-        <SecondaryPanel 
-          stepExplanation="Complete the form above"
-          promptText="npm install package-name"
-          onCopy={() => {}}
-        />
-      </div>
-      
-      <ProofFooter checklistItems={[]} />
-    </div>
-  );
-}
+## 🎨 Icons
+
+Using [Lucide React](https://lucide.dev/) for consistent iconography:
+- `LayoutDashboard` - Dashboard
+- `Code` - Practice
+- `FileText` - Assessments
+- `BookOpen` - Resources
+- `User` - Profile
+- `Video` - Mock Interviews
+- `TrendingUp` - Progress Tracking
+
+## 🔄 Development Workflow
+
+```bash
+# Start dev server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Lint code
+npm run lint
 ```
 
-## Error & Empty States
+## 📄 License
 
-### Error State
-- Explains what went wrong
-- Provides how to fix it
-- Never blames the user
+MIT License - feel free to use this project for learning and development.
 
-### Empty State
-- Provides next action
-- Never feels dead or abandoned
+## 🤝 Contributing
 
-## Interaction Principles
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-- **Transitions**: 150–200ms, ease-in-out
-- **No bounce effects**
-- **No parallax scrolling**
-- **No animation noise**
-- Calm, predictable, professional
+## 📧 Contact
 
-## Contributing
-
-This design system is intentionally strict. Any contributions must:
-
-1. Follow the 4-color palette exactly
-2. Use only the defined spacing scale
-3. Maintain visual coherence with existing components
-4. Avoid flashy or playful elements
-5. Keep interactions calm and predictable
-
-## License
-
-MIT License - feel free to use this design system in your projects.
-
-## Acknowledgments
-
-Built with a focus on calm, intentional design inspired by:
-- Linear's design system
-- Stripe's documentation
-- Notion's interface clarity
+For questions or feedback, please open an issue on GitHub.
 
 ---
 
-**Everything must feel like one mind designed it. No visual drift.**
+**Built with ❤️ for placement preparation**
