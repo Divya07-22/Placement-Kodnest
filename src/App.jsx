@@ -8,6 +8,7 @@ import Assessments from './pages/Assessments';
 import Resources from './pages/Resources';
 import Profile from './pages/Profile';
 import ProofPage from './pages/ProofPage';
+import ShipLock from './pages/ShipLock';
 import DesignSystem from './pages/DesignSystem';
 
 function App() {
