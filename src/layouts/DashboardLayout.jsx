@@ -9,7 +9,7 @@ export default function DashboardLayout() {
         { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
         { name: 'Practice', path: '/dashboard/practice', icon: Code },
         { name: 'Assessments', path: '/dashboard/assessments', icon: FileText },
-        { name: 'History', path: '/dashboard/resources', icon: BookOpen },
+        { name: 'Resources', path: '/dashboard/resources', icon: BookOpen },
         { name: 'Profile', path: '/dashboard/profile', icon: User },
     ];
 

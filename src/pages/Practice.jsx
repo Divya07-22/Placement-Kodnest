@@ -1,10 +1,12 @@
 import React from 'react';
 
-export default function Practice() {
+const Practice = () => {
     return (
         <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Practice Problems</h2>
-            <p className="text-gray-600">Start solving coding challenges to improve your skills.</p>
+            <h2 className="text-2xl font-bold mb-4">Practice Problems</h2>
+            <p>Solve coding challenges here.</p>
         </div>
     );
-}
+};
+
+export default Practice;

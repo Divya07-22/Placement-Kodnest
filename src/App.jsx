@@ -7,9 +7,6 @@ import Practice from './pages/Practice';
 import Assessments from './pages/Assessments';
 import Resources from './pages/Resources';
 import Profile from './pages/Profile';
-import Results from './pages/Results';
-import TestChecklist from './pages/TestChecklist';
-import ShipLock from './pages/ShipLock';
 import ProofPage from './pages/ProofPage';
 import DesignSystem from './pages/DesignSystem';
 
@@ -22,13 +19,11 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="practice" element={<Practice />} />
           <Route path="assessments" element={<Assessments />} />
-          <Route path="results" element={<Results />} />
           <Route path="resources" element={<Resources />} />
           <Route path="profile" element={<Profile />} />
         </Route>
 
         {/* Verification Pages */}
-        <Route path="/prp/07-test" element={<TestChecklist />} />
         <Route path="/prp/08-ship" element={<ShipLock />} />
         <Route path="/prp/proof" element={<ProofPage />} />
 

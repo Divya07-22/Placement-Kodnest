@@ -8,10 +8,11 @@ export default {
         extend: {
             colors: {
                 background: '#F7F6F3',
-                primary: '#111111',
-                accent: '#8B0000',
-                success: '#4CAF50', // Muted green
-                warning: '#FFC107', // Muted amber
+                primary: 'hsl(245, 58%, 51%)', // Indigo/Purple
+                text: '#111111', // Main text color
+                accent: '#8B0000', // Keeping deep red as accent if needed, or can remove
+                success: '#4CAF50',
+                warning: '#FFC107',
             },
             fontFamily: {
                 serif: ['"Playfair Display"', 'serif'],
