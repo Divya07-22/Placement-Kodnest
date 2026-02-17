@@ -14,11 +14,11 @@ export default function DashboardLayout() {
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-row">
-            {/* Sidebar (Fixed) */}
-            <aside className="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 flex flex-col z-50">
+        <div className="min-h-screen bg-gray-50 grid grid-cols-[256px_1fr]">
+            {/* Sidebar */}
+            <aside className="bg-white border-r border-gray-200 flex flex-col h-screen sticky top-0">
                 <div className="p-6">
-                    <h2 className="text-2xl font-bold text-primary">Placement Prep</h2>
+                    <h2 className="text-2xl font-bold text-indigo-700">Placement Prep</h2>
                 </div>
                 <nav className="px-4 space-y-2 flex-1 overflow-y-auto">
                     {navItems.map((item) => {
@@ -41,11 +41,11 @@ export default function DashboardLayout() {
                 </nav>
             </aside>
 
-            {/* Main Content (Offset) */}
-            <div className="flex-1 ml-64 flex flex-col min-h-screen">
+            {/* Main Content */}
+            <div className="flex flex-col min-w-0">
                 {/* Header */}
                 <header className="sticky top-0 z-40 bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
-                    <h1 className="text-2xl font-semibold text-gray-900">Placement Prep</h1>
+                    <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
                     <div className="flex items-center gap-4">
                         <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-semibold">
                             U
