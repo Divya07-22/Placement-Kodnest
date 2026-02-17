@@ -57,6 +57,11 @@ const DEFAULT_QUESTIONS = [
     "Where do you see yourself in 5 years?"
 ];
 
+// --- CONFIG ---
+const KNOWN_ENTERPRISES = [
+    'amazon', 'google', 'microsoft', 'adobe', 'cisco', 'ibm', 'accenture', 'tcs', 'infosys', 'wipro', 'cognizant', 'capgemini', 'deloitte', 'oracle', 'salesforce', 'uber', 'atlassian', 'intuit', 'samsung', 'jpmorgan', 'goldman sachs', 'walmart', 'flipkart', 'paytm', 'zomato', 'swiggy'
+];
+
 // --- CORE FUNCTIONS ---
 
 export const analyzeJD = (jdText, company, role) => {
@@ -101,12 +106,16 @@ export const analyzeJD = (jdText, company, role) => {
     // Cap at 100
     score = Math.min(Math.round(score), 100);
 
-    // 3. Generate Artifacts
+    // 3. Generate Company Intel & Rounds
+    const companyIntel = generateCompanyIntel(company);
+    const roundMapping = generateRoundMapping(companyIntel.type, extractedSkills);
+
+    // 4. Generate Artifacts
     const plan = generatePlan(extractedSkills);
     const checklist = generateChecklist(extractedSkills);
     const questions = generateQuestions(extractedSkills);
 
-    // 4. Construct Result Object
+    // 5. Construct Result Object
     const analysisResult = {
         id: uuidv4(),
         timestamp: Date.now(),
@@ -119,6 +128,8 @@ export const analyzeJD = (jdText, company, role) => {
         plan,
         checklist,
         questions,
+        companyIntel,
+        roundMapping,
         skillConfidenceMap: {} // User will fill this
     };
 
@@ -129,6 +140,83 @@ export const analyzeJD = (jdText, company, role) => {
 };
 
 // --- GENERATORS ---
+
+const generateCompanyIntel = (companyName) => {
+    if (!companyName) return null;
+
+    const nameLower = companyName.toLowerCase();
+    const isEnterprise = KNOWN_ENTERPRISES.some(ent => nameLower.includes(ent));
+
+    if (isEnterprise) {
+        return {
+            name: companyName,
+            type: 'Enterprise',
+            size: '2000+ Employees',
+            focus: 'Strong emphasis on Data Structures, Algorithms, and Core CS fundamentals. Expect standardized elimination rounds.'
+        };
+    } else {
+        return {
+            name: companyName,
+            type: 'Startup / Mid-size',
+            size: '< 200 Employees',
+            focus: 'Practical problem solving and specific tech stack depth. Expect machine coding or system discussion rounds.'
+        };
+    }
+};
+
+const generateRoundMapping = (type, skills) => {
+    const rounds = [];
+    const hasDSA = skills.coreCS.includes('dsa') || skills.coreCS.includes('algorithms');
+    const hasWeb = skills.web.length > 0;
+
+    if (type === 'Enterprise') {
+        rounds.push({
+            title: 'Round 1: Online Assessment',
+            focus: 'Aptitude + DSA (Medium)',
+            why: 'To filter thousands of applicants efficiently.',
+            tips: ['Focus on Array/String/DP problems', 'Speed and accuracy matter most']
+        });
+        rounds.push({
+            title: 'Round 2: Technical Interview I',
+            focus: 'DSA + Core CS (OS/DBMS)',
+            why: 'To test your problem-solving foundations.',
+            tips: ['Explain your thought process clearly', 'Handle edge cases']
+        });
+        rounds.push({
+            title: 'Round 3: Technical Interview II',
+            focus: 'Advanced DSA + Project Deep Dive',
+            why: 'To verify project ownership and depth.',
+            tips: ['Know your resume projects inside out', 'Be ready for "Why this stack?"']
+        });
+        rounds.push({
+            title: 'Round 4: HR / Managerial',
+            focus: 'Behavioral + Culture Fit',
+            why: 'To ensure long-term stability and team fit.',
+            tips: ['Use STAR method for answers', 'Research company values']
+        });
+    } else {
+        // Startup Flow
+        rounds.push({
+            title: 'Round 1: Practical / Machine Coding',
+            focus: hasWeb ? 'Build a Feature / UI' : 'Scripting / Logic',
+            why: 'To prove you can write production-ready code.',
+            tips: ['Write clean, modular code', 'Handle errors gracefully']
+        });
+        rounds.push({
+            title: 'Round 2: Tech Design / System Discussion',
+            focus: 'Architecture + DB Design',
+            why: 'To see if you can build scalable systems.',
+            tips: ['Discuss trade-offs (SQL vs NoSQL)', 'Focus on API design']
+        });
+        rounds.push({
+            title: 'Round 3: Culture & Founder Fit',
+            focus: 'Passion + Ownership',
+            why: 'Startups need self-starters who take ownership.',
+            tips: ['Show enthusiasm for the product', 'Ask good questions']
+        });
+    }
+    return rounds;
+};
 
 const generatePlan = (skills) => {
     // Determine focus areas
