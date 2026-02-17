@@ -11,6 +11,8 @@ import ProofPage from './pages/ProofPage';
 import ShipLock from './pages/ShipLock';
 import DesignSystem from './pages/DesignSystem';
 
+import TestChecklist from './pages/TestChecklist';
+
 function App() {
   return (
     <BrowserRouter>
@@ -25,6 +27,7 @@ function App() {
         </Route>
 
         {/* Verification Pages */}
+        <Route path="/prp/07-test" element={<TestChecklist />} />
         <Route path="/prp/08-ship" element={<ShipLock />} />
         <Route path="/prp/proof" element={<ProofPage />} />
 
