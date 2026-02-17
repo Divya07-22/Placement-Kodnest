@@ -1,7 +1,9 @@
 import React from 'react';
 import { PlayCircle, Calendar, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+    const navigate = useNavigate();
     return (
         <div className="p-2 md:p-6 max-w-7xl mx-auto space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -92,7 +94,7 @@ const Dashboard = () => {
                         </div>
 
                         <button
-                            onClick={() => window.location.href = '/dashboard/practice'}
+                            onClick={() => navigate('/dashboard/practice')}
                             className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2">
                             Continue Session <ArrowRight className="w-4 h-4" />
                         </button>
