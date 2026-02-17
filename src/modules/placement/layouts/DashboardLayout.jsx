@@ -1,14 +1,15 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Code, FileText, BookOpen, User, Briefcase } from 'lucide-react';
+import { LayoutDashboard, Code, FileText, BookOpen, User } from 'lucide-react';
 
 export default function DashboardLayout() {
     const location = useLocation();
 
     const navItems = [
-        { name: 'Placement Prep', path: '/dashboard', icon: BookOpen },
-        { name: 'Job Tracker', path: '/dashboard/jobs', icon: Briefcase },
-        { name: 'AI Resume', path: '/dashboard/resume', icon: FileText },
+        { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+        { name: 'Practice', path: '/dashboard/practice', icon: Code },
+        { name: 'Assessments', path: '/dashboard/assessments', icon: FileText },
+        { name: 'Resources', path: '/dashboard/resources', icon: BookOpen },
         { name: 'Profile', path: '/dashboard/profile', icon: User },
     ];
 
