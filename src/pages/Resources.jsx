@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { History, FileText, ArrowRight, Trash2, Calendar, Building } from 'lucide-react';
+import { History, FileText, ArrowRight, Trash2, Calendar, Building, ExternalLink } from 'lucide-react';
 import { getHistory } from '../utils/analysisUtils';
 
 const Resources = () => {
@@ -24,16 +24,42 @@ const Resources = () => {
     };
 
     return (
-        <div className="max-w-5xl mx-auto space-y-6">
-            <div className="flex justify-between items-center">
-                <div>
-                    <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                        <History className="w-6 h-6 text-indigo-600" />
-                        Analysis History
-                    </h1>
-                    <p className="text-gray-600 mt-1">Access your previous JD analyses and preparation plans.</p>
+        <div className="max-w-5xl mx-auto space-y-8 font-sans">
+            <div>
+                <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
+                    <History className="w-8 h-8 text-indigo-600" />
+                    Resources & History
+                </h1>
+                <p className="text-gray-600 mt-2">Access your previous analyses and curated study materials.</p>
+            </div>
+
+            {/* Learning Resources Section */}
+            <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-gray-500" /> Recommended Reading
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {[
+                        { title: "React Documentation", link: "https://react.dev", color: "text-blue-500", bg: "bg-blue-50" },
+                        { title: "System Design Primer", link: "https://github.com/donnemartin/system-design-primer", color: "text-purple-500", bg: "bg-purple-50" },
+                        { title: "JavaScript Info", link: "https://javascript.info", color: "text-yellow-500", bg: "bg-yellow-50" }
+                    ].map((res, i) => (
+                        <a key={i} href={res.link} target="_blank" rel="noopener noreferrer" className="bg-white p-4 rounded-xl border border-gray-200 hover:border-indigo-300 transition-all flex items-center justify-between group">
+                            <div className="flex items-center gap-3">
+                                <div className={`p-2 rounded-lg ${res.bg}`}>
+                                    <FileText className={`w-5 h-5 ${res.color}`} />
+                                </div>
+                                <span className="font-semibold text-gray-700 group-hover:text-indigo-600 transition-colors">{res.title}</span>
+                            </div>
+                            <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-indigo-500" />
+                        </a>
+                    ))}
                 </div>
             </div>
+
+            <hr className="border-gray-200" />
+
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Analysis History</h3>
 
             {history.length === 0 ? (
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">

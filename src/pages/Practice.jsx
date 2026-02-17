@@ -151,7 +151,9 @@ const Practice = () => {
                         </div>
                     </div>
                 </div>
-                );
+            </div>
+        </div>
+    );
 };
 
-                export default Practice;
+export default Practice;
