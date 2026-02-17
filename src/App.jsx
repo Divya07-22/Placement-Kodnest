@@ -11,6 +11,7 @@ import Results from './pages/Results';
 import TestChecklist from './pages/TestChecklist';
 import ShipLock from './pages/ShipLock';
 import ProofPage from './pages/ProofPage';
+import DesignSystem from './pages/DesignSystem';
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
         <Route path="/prp/07-test" element={<TestChecklist />} />
         <Route path="/prp/08-ship" element={<ShipLock />} />
         <Route path="/prp/proof" element={<ProofPage />} />
+
+        {/* Design System Verification */}
+        <Route path="/design-system" element={<DesignSystem />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
