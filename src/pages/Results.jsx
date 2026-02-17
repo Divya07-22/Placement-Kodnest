@@ -46,17 +46,43 @@ export default function Results({ initialData: propInitialData }) {
 
             setSkillConfidenceMap(initialMap);
 
-            // Determine base score (backwards compatibility)
-            const baseScore = initialData.baseScore !== undefined ? initialData.baseScore : (initialData.readinessScore || 0);
+            // Robust Base Score Calculation
+            let baseScore;
 
-            // Calculate initial live score based on map
+            // Calculate modifier from the map
             let modifier = 0;
             Object.values(initialMap).forEach(val => {
                 if (val === 'know') modifier += 2;
                 if (val === 'practice') modifier -= 2;
             });
 
+            if (initialData.baseScore !== undefined) {
+                baseScore = initialData.baseScore;
+            } else {
+                // Backward compatibility: If no baseScore, infer it
+                // Logic: currentScore = base + modifier
+                // Therefore: base = currentScore - modifier
+                // But wait, if it was a legacy item, readinessScore might be the *only* score. 
+                // If map is NEW (empty), modifier is for Defaults. 
+                // If map existed, modifier is for existing values.
+
+                if (Object.keys(initialData.skillConfidenceMap || {}).length > 0) {
+                    // Map existed, so readinessScore presumably includes the modifier.
+                    baseScore = (initialData.readinessScore || 0) - modifier;
+                } else {
+                    // Map matches defaults we just set. 
+                    // If we just defaulted everything to 'practice', modifier is negative.
+                    // The readinessScore from analysis does NOT include these defaults yet.
+                    // So base is just readinessScore.
+                    baseScore = initialData.readinessScore || 0;
+                }
+            }
+
+            // Calculate initial live score
             setLiveScore(Math.max(0, Math.min(100, baseScore + modifier)));
+
+            // Store baseScore in state for updates (we can attach it to initialData object in state)
+            setInitialData(prev => ({ ...prev, baseScore }));
         }
     }, [initialData]);
 
@@ -65,8 +91,8 @@ export default function Results({ initialData: propInitialData }) {
         const newMap = { ...skillConfidenceMap, [skill]: status };
         setSkillConfidenceMap(newMap);
 
-        // Determine base score
-        const baseScore = initialData.baseScore !== undefined ? initialData.baseScore : (initialData.readinessScore || 0);
+        // Get base score (from our patched state)
+        const baseScore = initialData.baseScore || 0;
 
         // Calculate new score: Base + (Knows * 2) - (Practices * 2)
         let modifier = 0;
@@ -82,8 +108,8 @@ export default function Results({ initialData: propInitialData }) {
         if (historyId) {
             updateHistoryEntry(historyId, {
                 skillConfidenceMap: newMap,
-                finalScore: newScore, // Save final score
-                readinessScore: newScore // Update legacy field for compatibility
+                readinessScore: newScore, // Update display score
+                baseScore: baseScore // Ensure base persists
             });
         }
     };

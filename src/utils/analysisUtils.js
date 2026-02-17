@@ -115,6 +115,7 @@ export const analyzeJD = (jdText, company, role) => {
         jdText, // Keep for reference? Maybe truncate if huge
         extractedSkills,
         readinessScore: score,
+        baseScore: score, // Store base score for interactive updates
         plan,
         checklist,
         questions,
