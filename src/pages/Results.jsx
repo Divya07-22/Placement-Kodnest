@@ -3,16 +3,27 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, CheckCircle, Calendar, Target, Download, Copy, Check, X } from 'lucide-react';
 import { getHistoryById, updateHistoryEntry } from '../utils/analysisUtils';
 
-export default function Results() {
+export default function Results({ initialData: propInitialData }) {
     const location = useLocation();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
     // Get initial data
     const historyId = searchParams.get('id');
-    const initialData = historyId
-        ? getHistoryById(historyId)
-        : location.state;
+    const locationState = location.state?.analysis;
+
+    // Initialize state - prioritize prop, then location state, then null (will fetch in effect)
+    const [initialData, setInitialData] = useState(propInitialData || locationState || null);
+
+    // Fetch from history if not in state
+    useEffect(() => {
+        if (!initialData && historyId) {
+            const entry = getHistoryById(historyId);
+            if (entry) {
+                setInitialData(entry);
+            }
+        }
+    }, [historyId, initialData]);
 
     // State for interactive features
     const [skillConfidenceMap, setSkillConfidenceMap] = useState({});
@@ -355,7 +366,7 @@ ${questions.map((q, i) => `${i + 1}. ${q}`).join('\n')}
                         Download TXT
                     </button>
                     <button
-                        onClick={() => navigate('/dashboard/assessments')}
+                        onClick={() => navigate('/dashboard/practice')}
                         className="flex items-center gap-2 text-gray-600 hover:text-gray-900 px-3"
                     >
                         <ArrowLeft className="w-5 h-5" />
