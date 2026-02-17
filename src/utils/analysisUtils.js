@@ -90,8 +90,12 @@ export const analyzeJD = (jdText, company, role) => {
         }
     });
 
-    // Fallback if low matches
-    if (totalMatches < 2) {
+    // Fallback if no skills detected at all
+    if (totalMatches === 0) {
+        extractedSkills.other = ['Communication', 'Problem Solving', 'Basic Coding', 'Project Management'];
+        categoriesPresent = 1; // Give some points for generic skills
+    } else if (totalMatches < 2) {
+        // Weak signal fallback
         extractedSkills.general = ['Problem Solving', 'Communication', 'Aptitude'];
     }
 
@@ -115,22 +119,32 @@ export const analyzeJD = (jdText, company, role) => {
     const checklist = generateChecklist(extractedSkills);
     const questions = generateQuestions(extractedSkills);
 
-    // 5. Construct Result Object
+    // 5. Construct Result Object (Strict Schema)
+    const timestamp = Date.now();
     const analysisResult = {
         id: uuidv4(),
-        timestamp: Date.now(),
-        company: company || 'Unknown Company',
-        role: role || 'General Role',
-        jdText, // Keep for reference? Maybe truncate if huge
-        extractedSkills,
-        readinessScore: score,
-        baseScore: score, // Store base score for interactive updates
-        plan,
+        createdAt: timestamp,
+        updatedAt: timestamp,
+        company: company || '',     // No nulls
+        role: role || '',           // No nulls
+        jdText: jdText || '',       // No nulls
+        extractedSkills,            // Guaranteed to have all keys
+
+        // Scores
+        baseScore: score,           // Fixed baseline
+        finalScore: score,          // Mutable (initially same as base)
+        readinessScore: score,      // Legacy support (aliased to finalScore)
+
+        // Artifacts
+        plan7Days: plan,            // Schema requires plan7Days
+        plan: plan,                 // Keep 'plan' for existing UI compatibility
         checklist,
         questions,
         companyIntel,
         roundMapping,
-        skillConfidenceMap: {} // User will fill this
+
+        // User State
+        skillConfidenceMap: {}
     };
 
     // Save to History
@@ -289,8 +303,15 @@ export const saveToHistory = (entry) => {
 
 export const getHistory = () => {
     try {
-        return JSON.parse(localStorage.getItem('prp_analysis_history') || '[]');
+        const raw = localStorage.getItem('prp_analysis_history');
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return [];
+
+        // Filter out corrupted entries (missing ID or timestamp)
+        return parsed.filter(item => item && item.id && item.createdAt);
     } catch (e) {
+        console.error("History load failed", e);
         return [];
     }
 };
@@ -305,7 +326,17 @@ export const updateHistoryEntry = (id, updates) => {
         const history = getHistory();
         const index = history.findIndex(item => item.id === id);
         if (index !== -1) {
-            history[index] = { ...history[index], ...updates };
+            history[index] = {
+                ...history[index],
+                ...updates,
+                updatedAt: Date.now() // Update timestamp
+            };
+
+            // Sync legacy field if finalScore changed
+            if (updates.finalScore !== undefined) {
+                history[index].readinessScore = updates.finalScore;
+            }
+
             localStorage.setItem('prp_analysis_history', JSON.stringify(history));
         }
     } catch (e) {

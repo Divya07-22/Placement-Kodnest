@@ -14,6 +14,7 @@ const Practice = () => {
     const [company, setCompany] = useState('');
     const [role, setRole] = useState('');
     const [isAnalyzing, setIsAnalyzing] = useState(false);
+    const [warningMsg, setWarningMsg] = useState('');
 
     useEffect(() => {
         // If navigated with state (from History), show results
@@ -24,7 +25,15 @@ const Practice = () => {
     }, [location.state]);
 
     const handleAnalyze = () => {
-        if (!jdText.trim()) return;
+        if (!jdText.trim()) {
+            alert("Please paste a Job Description to analyze.");
+            return;
+        }
+
+        setWarningMsg('');
+        if (jdText.length < 200) {
+            setWarningMsg("This JD is too short to analyze deeply. Paste full JD for better output.");
+        }
 
         setIsAnalyzing(true);
 
@@ -95,50 +104,54 @@ const Practice = () => {
                         <p className="text-xs text-gray-500 text-right">
                             {jdText.length} characters
                         </p>
+
+                        <div className="flex justify-end pt-4 flex-col items-end gap-3">
+                            {warningMsg && (
+                                <div className="text-amber-600 text-sm bg-amber-50 px-3 py-1 rounded border border-amber-200">
+                                    Warning: {warningMsg}
+                                </div>
+                            )}
+                            <button
+                                onClick={handleAnalyze}
+                                disabled={isAnalyzing || !jdText.trim()}
+                                className={`
+                                flex items-center gap-2 px-8 py-3 rounded-lg font-semibold text-white
+                                transition-all duration-300 shadow-lg hover:shadow-xl
+                                ${isAnalyzing ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-primary to-indigo-600 hover:translate-y-[-2px]'}
+                            `}
+                            >
+                                {isAnalyzing ? (
+                                    <>
+                                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        Analyzing...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Sparkles className="w-5 h-5" />
+                                        Analyze Job Description
+                                    </>
+                                )}
+                            </button>
+                        </div>
                     </div>
 
-                    <button
-                        onClick={handleAnalyze}
-                        disabled={!jdText.trim() || isAnalyzing}
-                        className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-[1.01] active:scale-[0.99]
-                            ${!jdText.trim() || isAnalyzing
-                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:shadow-indigo-500/30'
-                            }`}
-                    >
-                        {isAnalyzing ? (
-                            <>
-                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                Analyzing Requirements...
-                            </>
-                        ) : (
-                            <>
-                                <Search className="w-5 h-5" />
-                                Analyze & Generate Plan
-                            </>
-                        )}
-                    </button>
-
+                    {/* Quick Tips */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                        <div className="p-4 rounded-lg bg-indigo-50 border border-indigo-100">
+                            <h3 className="font-semibold text-indigo-900 mb-1">Smart Extraction</h3>
+                            <p className="text-sm text-indigo-700">We identify core skills like React, SQL, and System Design.</p>
+                        </div>
+                        <div className="p-4 rounded-lg bg-purple-50 border border-purple-100">
+                            <h3 className="font-semibold text-purple-900 mb-1">7-Day Plan</h3>
+                            <p className="text-sm text-purple-700">Get a daily schedule tailored to the job's stack.</p>
+                        </div>
+                        <div className="p-4 rounded-lg bg-pink-50 border border-pink-100">
+                            <h3 className="font-semibold text-pink-900 mb-1">Checklist</h3>
+                            <p className="text-sm text-pink-700">Round-by-round breakdown of what to prepare.</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            {/* Quick Tips */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                <div className="p-4 rounded-lg bg-indigo-50 border border-indigo-100">
-                    <h3 className="font-semibold text-indigo-900 mb-1">Smart Extraction</h3>
-                    <p className="text-sm text-indigo-700">We identify core skills like React, SQL, and System Design.</p>
-                </div>
-                <div className="p-4 rounded-lg bg-purple-50 border border-purple-100">
-                    <h3 className="font-semibold text-purple-900 mb-1">7-Day Plan</h3>
-                    <p className="text-sm text-purple-700">Get a daily schedule tailored to the job's stack.</p>
-                </div>
-                <div className="p-4 rounded-lg bg-pink-50 border border-pink-100">
-                    <h3 className="font-semibold text-pink-900 mb-1">Checklist</h3>
-                    <p className="text-sm text-pink-700">Round-by-round breakdown of what to prepare.</p>
-                </div>
-            </div>
-        </div>
-    );
+                );
 };
 
-export default Practice;
+                export default Practice;
