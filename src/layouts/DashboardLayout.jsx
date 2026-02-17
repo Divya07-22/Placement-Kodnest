@@ -14,13 +14,13 @@ export default function DashboardLayout() {
     ];
 
     return (
-        <div className="flex flex-row h-screen bg-gray-50 overflow-hidden">
-            {/* Sidebar */}
-            <aside className="w-64 flex-shrink-0 bg-white border-r border-gray-200 flex flex-col">
+        <div className="min-h-screen bg-gray-50 flex flex-row">
+            {/* Sidebar (Fixed) */}
+            <aside className="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 flex flex-col z-50">
                 <div className="p-6">
                     <h2 className="text-2xl font-bold text-primary">Placement Prep</h2>
                 </div>
-                <nav className="px-4 space-y-2">
+                <nav className="px-4 space-y-2 flex-1 overflow-y-auto">
                     {navItems.map((item) => {
                         const Icon = item.icon;
                         const isActive = location.pathname === item.path;
@@ -29,7 +29,7 @@ export default function DashboardLayout() {
                                 key={item.path}
                                 to={item.path}
                                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
-                                    ? 'bg-indigo-50 text-primary font-medium'
+                                    ? 'bg-indigo-50 text-indigo-600 font-medium'
                                     : 'text-gray-700 hover:bg-gray-100'
                                     }`}
                             >
@@ -41,20 +41,20 @@ export default function DashboardLayout() {
                 </nav>
             </aside>
 
-            {/* Main Content */}
-            <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+            {/* Main Content (Offset) */}
+            <div className="flex-1 ml-64 flex flex-col min-h-screen">
                 {/* Header */}
-                <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
+                <header className="sticky top-0 z-40 bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
                     <h1 className="text-2xl font-semibold text-gray-900">Placement Prep</h1>
                     <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-semibold">
+                        <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-semibold">
                             U
                         </div>
                     </div>
                 </header>
 
                 {/* Content Area */}
-                <main className="flex-1 overflow-auto p-8">
+                <main className="flex-1 p-8 overflow-x-hidden">
                     <Outlet />
                 </main>
             </div>
