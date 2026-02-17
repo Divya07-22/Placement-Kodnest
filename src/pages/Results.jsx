@@ -425,7 +425,7 @@ ${questions.map((q, i) => `${i + 1}. ${q}`).join('\n')}
                         <h3 className="text-xl font-semibold text-gray-900 mb-4">Skill Confidence</h3>
                         <p className="text-xs text-gray-500 mb-4">Mark skills you know to update your score.</p>
                         <div className="space-y-4">
-                            {Object.keys(extractedSkills).map(category => (
+                            {Object.keys(extractedSkills || {}).map(category => (
                                 <div key={category}>
                                     <h4 className="text-sm font-medium text-gray-700 mb-2 uppercase tracking-wide">
                                         {categoryNames[category]}

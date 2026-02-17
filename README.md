@@ -1,550 +1,165 @@
-# Placement Readiness Platform
+# Placement Readiness Platform 🚀
 
-A comprehensive web application to help students prepare for campus placements through practice problems, mock interviews, progress tracking, skill assessment, and **AI-powered JD analysis**.
+A premium, AI-powered web application designed to help students master campus placements. This platform integrates **Job Description (JD) Analysis**, **Skill Assessment**, **Mock Interviews**, and **Progress Tracking** into a single, cohesive dashboard.
 
-![React](https://img.shields.io/badge/React-18.3-blue)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.x-38bdf8)
-![React Router](https://img.shields.io/badge/React_Router-6.x-red)
-
-## 🚀 Live Demo
-
-**Production URL**: [https://placement-kodnest.vercel.app](https://placement-kodnest.vercel.app)
-**Local Development**: http://localhost:5173
+![React](https://img.shields.io/badge/React-18.3-blue?style=for-the-badge&logo=react)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8?style=for-the-badge&logo=tailwindcss)
+![Vite](https://img.shields.io/badge/Vite-5.0-646cff?style=for-the-badge&logo=vite)
+![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel)
 
 ---
 
-## 📋 Project Evolution
+## 🌐 Live Demo & Deployment
 
-This project was built in **5 comprehensive phases**, each adding significant functionality:
-
-### **Task 1: KodNest Premium Build System** ✅
-Initial design system with calm, intentional aesthetics:
-- 4-color palette (#F7F6F3, #111111, #8B0000, #4A6741)
-- Consistent spacing scale (8/16/24/40/64px)
-- Professional typography (Crimson Pro serif + Inter sans-serif)
-- Component library (TopBar, ContextHeader, Cards, Buttons)
-
-### **Task 2: Placement Platform Setup** ✅
-Technology stack configuration:
-- Tailwind CSS v3 for styling
-- React Router DOM for navigation
-- Lucide React for icons
-- Vite build tool
-- Indigo/purple color scheme (hsl(245, 58%, 51%))
-
-### **Task 3: Landing Page & Dashboard Shell** ✅
-Core application structure:
-- **Landing Page**:
-  - Hero section with "Ace Your Placement" headline
-  - Features grid (Practice Problems, Mock Interviews, Track Progress)
-  - Footer with copyright
-  - "Get Started" CTA button
-- **Dashboard Layout**:
-  - Sidebar navigation (Dashboard, Practice, Assessments, History, Profile)
-  - Header with branding and user avatar
-  - Main content area with React Router Outlet
-  - Responsive design
-
-### **Task 4: Advanced Dashboard Components** ✅
-Comprehensive dashboard with data visualizations:
-- **Overall Readiness**: Circular progress indicator (72/100) with SVG stroke-dasharray animation
-- **Skill Breakdown**: Custom SVG radar chart with 5 axes (DSA, System Design, Communication, Resume, Aptitude)
-- **Continue Practice**: Last topic card with progress bar (3/10 completed)
-- **Weekly Goals**: Problems solved tracker (12/20) with 7-day activity indicators
-- **Upcoming Assessments**: List of 3 scheduled assessments with icons and times
-- Responsive 2-column grid layout (single column on mobile)
-
-### **Task 5: JD Analysis System** ✅ **NEW!**
-Complete job description analysis with heuristic intelligence:
-- **Skill Extraction Engine**:
-  - Heuristic keyword detection across 6 categories
-  - Categories: Core CS, Languages, Web, Data, Cloud/DevOps, Testing
-  - Fallback to "General fresher stack" if no skills detected
-- **Readiness Score (0-100)**:
-  - Base score: 35
-  - +5 per category detected (max 30)
-  - +10 if company provided
-  - +10 if role provided
-  - +10 if JD length > 800 characters
-- **Round-wise Preparation Checklist**:
-  - Round 1: Aptitude & Basics
-  - Round 2: DSA & Core CS (adaptive based on skills)
-  - Round 3: Technical Interview (skill-specific items)
-  - Round 4: HR & Behavioral
-- **7-Day Study Plan**:
-  - Adaptive daily tasks based on detected skills
-  - Day 1-2: Basics & Core CS
-  - Day 3-4: DSA Practice
-  - Day 5: Projects & Tech Stack
-  - Day 6: Mock Interviews
-  - Day 7: Revision
-- **10 Likely Interview Questions**:
-  - Generated based on detected skills
-  - Skill-specific questions (e.g., React → state management)
-- **localStorage History**:
-  - Saves all analyses locally
-  - Persists across page refreshes
-  - View/Delete functionality
-  - Works completely offline
-
-### **Task 6: Interactive Results & Exports** ✅ **NEW!**
-Enhanced analysis experience with user interaction:
-- **Skill Confidence Toggles**:
-  - "I know this" (Green) vs "Need practice" (Orange)
-  - Persisted per analysis in history
-- **Live Scoring Engine**:
-  - Base score + dynamic adjustments
-  - +2 for known skills, -2 for practice areas
-  - Real-time circular progress updates
-- **Export Suite**:
-  - Copy to Clipboard: 7-Day Plan, Checklist, Interview Questions
-  - Download as TXT: Complete analysis report
-- **Action Next**:
-  - Smart suggestion box highlighting top 3 weak skills
-  - "Start Day 1 plan" call to action
-
-
-### **Task 7: Company Intel & Round Mapping** ✅ **NEW!**
-Intelligent context layer for targeted preparation:
-- **Heuristic Company Engine**:
-  - Classifies companies (Enterprise/Startup/Mid-size)
-  - Infers hiring focus (DSA vs Practical) based on type
-- **Dynamic Round Mapping**:
-  - **Enterprise Path**: 4 Rounds (Assessment → Tech 1 → Tech 2 → HR)
-  - **Startup Path**: 3 Rounds (Practical → Deep Dive → Culture)
-  - **"Why this matters"**: Contextual tips for each round
-- **UI Architecture**:
-  - Dedicated Company Intel Data Card
-  - Vertical timeline visualization for interview rounds
-  - Fully persisted in history
-  - "Demo Mode" disclaimer for transparency
-  - "Why this matters" tooltips
-
-### **Task 8: System Hardening** ✅
-Robustness and reliability improvements:
-- **Input Validation**: Minimum character limits and empty state handling
-- **Deep Fallback**: "General" skill set generator for non-technical JDs
-- **Score Stability**: Deterministic scoring logic (no random jumps)
-- **Crash Prevention**: Error boundaries for checklist generation (React bug fix)
-
-### **Task 9: Verification Module** ✅ **NEW!**
-Built-in quality assurance and shipping control:
-- **Test Checklist (`/prp/07-test`)**:
-  - 10-point system verification list
-  - localStorage persistence for progress tracking
-  - Visual progress bar and status indicators
-- **Ship Lock (`/prp/08-ship`)**:
-  - Conditional access logic (Blocks access until 10/10 tests pass)
-  - "Ready to Ship" celebration screen upon completion
-  - Strict quality gate for production deployment
-
-### **Task 10: Proof & Submission** ✅ **COMPLETED**
-The final "productization" layer:
-- **Proof of Work Page (`/prp/proof`)**:
-  - Validates project artifacts (Lovable, GitHub, Deployed URLs)
-  - Enforces "Shipped" status only when 100% complete
-  - Generates formatted submission export
-- **Gateway Logic**:
-  - Secure integration with Ship Lock and Checklist
-  - Prevents premature submission
-
+**Production URL**: [https://placement-kodnest.vercel.app](https://placement-kodnest.vercel.app)  
+**Repository**: [GitHub Link](https://github.com/Divya07-22/Placement-Kodnest)
 
 ---
 
-## ✨ Features
+## 📋 Project Journey (Tasks 1-10)
 
-### Landing Page
-- **Hero Section**: Eye-catching headline with gradient background
-- **Features Grid**: Three key features with lucide-react icons
-  - 📝 Practice Problems - Solve coding challenges
-  - 🎥 Mock Interviews - Simulate real interviews
-  - 📊 Track Progress - Monitor improvement with analytics
-- **Responsive Footer**: Copyright information
+This application was built through **10 disciplined milestones**, evolving from a basic design system to a production-ready SaaS product.
 
-### Dashboard Overview
-- **Readiness Score**: Visual circular progress showing overall preparation (72/100)
-- **Skill Assessment**: Radar chart displaying proficiency across 5 key areas
-- **Practice Continuation**: Quick access to resume last topic (Dynamic Programming)
-- **Weekly Goals**: Track problems solved with daily activity visualization
-- **Assessment Calendar**: Upcoming mock tests and interviews with scheduling
+### **Phase 1: Foundation**
+- **Task 1: Design System** ✅  
+  Created the "KodNest Premium Build System" with a curated 4-color palette (`#F7F6F3` background, `#111111` text, `#4A6741` success) and professional typography (Crimson Pro + Inter).
+- **Task 2: Architecture Setup** ✅  
+  Initialized Vite + React + Tailwind CSS environment. Configured `react-router-dom` for robust Single Page Application (SPA) navigation.
 
-### JD Analysis (NEW!)
-- **Smart JD Input**: Company, role, and job description fields
-- **Skill Extraction**: Automatic detection of required skills from JD text
-- **Readiness Scoring**: 0-100 score based on multiple factors
-- **Preparation Planning**: Round-wise checklist and 7-day study plan
-- **Interview Prep**: 10 likely questions based on JD requirements
-- **History Tracking**: Save and review past analyses
+### **Phase 2: Core UI**
+- **Task 3: Landing & Layouts** ✅  
+  Built a high-conversion Landing Page and a responsive `DashboardLayout` with side navigation, header user profile, and sticky positioning.
+- **Task 4: Advanced Dashboard** ✅  
+  Implemented complex data visualizations:
+  - **Readiness Score**: Animated circular progress (SVG).
+  - **Skill Radar**: Custom skill breakdown bars.
+  - **Activity Tracker**: Weekly goal visualization.
 
-### 6. Company Intel & Round Mapping (New)
-- **Heuristic Company Analysis**: Automatically detects "Enterprise" vs "Startup" based on company name.
-- **Dynamic Interview Roadmap**: Generates a 3-4 round interview process tailored to the company type.
-- **Round-Specific Tips**: Provides "Why this round matters" context and specific focus areas.
+### **Phase 3: The Intelligence Engine (JD Analyzer)**
+- **Task 5: Heuristic Analysis Logic** ✅  
+  Developed `analysisUtils.js` to process raw Job Descriptions without external APIs.
+  - **Skill Extraction**: Identifies keywords across 6 categories (Web, Data, Cloud, etc.).
+  - **Adaptive Scoring**: Calculates a dynamic 0-100 readiness score.
+  - **7-Day Plan**: Generates a tailored study schedule.
+- **Task 6: Interactive Results** ✅  
+  Created a `Results.jsx` page where users can:
+  - Toggle skills ("Know" vs "Practice") to update their score in real-time.
+  - Download full analysis reports as `.txt`.
+  - Copy interview questions to clipboard.
 
-### 7. Core Hardening (New)
-- **Strict Data Validation**: Ensures JDs are sufficient length for quality analysis.
-- **Score Stability**: Base scores remain fixed while you toggle skill confidence.
-- **Robust Persistence**: Auto-recovery from corrupted history data.
-- **Offline Capable**: All logic runs client-side with no external API dependencies.
+### **Phase 4: Advanced Context**
+- **Task 7: Company Intel & Round Mapping** ✅  
+  Added a heuristic layer to detect company types ("Enterprise" vs "Startup") and generate specific interview round timelines (e.g., "DSA Round" for Google vs "Machine Coding" for Startups).
+- **Task 8: System Hardening & Dark Mode** ✅  
+  - **Dark Mode**: Fully implemented toggleable dark theme using Tailwind `dark:` classes.
+  - **Robustness**: Added error boundaries, empty state handling, and legacy data migration to prevent crashes.
 
-### 8. Verification & Shipping (New)
-- **Built-in Checklist**: Track system health with a persistent 10-point test list.
-- **Production Lock**: Prevents shipping usage until all quality checks are verified.
-- **Quality Gate**: Ensures high reliability before "Go Live".
-
-### 9. Proof & Submission (Final)
-- **Artifact Validation**: Ensures all project links are valid before shipping.
-- **Copy-Paste Export**: One-click generation of the final submission report.
-
-### Navigation
-- **Sidebar**: Quick access to all sections
-  - Dashboard - Overview and statistics
-  - Practice - Coding challenges
-  - Assessments - JD analysis tool
-  - History - Saved analyses
-  - Profile - User settings
-- **Header**: Branding and user avatar
-- **Routing**: Seamless navigation with React Router
+### **Phase 5: Verification & Shipping**
+- **Task 9: Quality Assurance Protocols** ✅  
+  - **Test Checklist**: A 10-point interactive manual test suite (`/prp/07-test`) that persists progress.
+  - **Ship Lock**: A security gate that prevents shipping until all tests pass (`/prp/08-ship`).
+- **Task 10: Proof & Submission** ✅  
+  - **Final Gate**: The `/prp/proof` page collects valid artifact links (Lovable, GitHub, Vercel).
+  - **Validation**: Enforces 100% completion before allowing the final "Shipped" status update.
 
 ---
 
-## 🎨 Design System
+## ✨ Key Features
 
-### Color Scheme
-- **Primary Color**: `hsl(245, 58%, 51%)` (Indigo/Purple)
-- **Gradient Background**: Indigo to Purple (Landing page)
-- **Success**: Green badges for high scores
-- **Warning**: Yellow/Orange for medium scores
-- **Clean UI**: Modern, professional interface
+### 1. 🧠 Smart JD Analyzer
+Paste any Job Description to get an instant, tailored preparation strategy.
+- **Readiness Score**: 0-100 match rating.
+- **Skill Gap Analysis**: Identifies what you know vs. what you need to learn.
+- **Interview Questions**: 10 likely technical questions based on the JD's stack.
 
-### Typography
-- **Headings**: Bold, large sizes for hierarchy
-- **Body**: 16px base with 1.7 line-height
-- **Font Stack**: System fonts for performance
+### 2. 📊 Interactive Dashboard
+- **Visual Analytics**: Track your growth across DSA, System Design, and Soft Skills.
+- **Dark Mode**: Seamless toggle for comfortable late-night coding sessions.
+- **Profile Management**: Edit user details and preferences.
 
-### Components
-- **Cards**: White background with subtle shadows
-- **Buttons**: Primary (solid indigo) and Secondary (outlined)
-- **Progress Bars**: Smooth animations with primary color
-- **Icons**: Lucide React for consistency
-- **Tags**: Skill badges with category-based styling
+### 3. 🛡️ Verification System
+A built-in QA module ensures the application is bug-free before "shipping".
+- **Visual Checklist**: Track manual test coverage.
+- **Ship Guard**: Prevents premature deployment.
 
 ---
 
-## 📦 Installation
+## 🛠️ Technology Stack
+
+| Category | Tech | Description |
+| :--- | :--- | :--- |
+| **Frontend** | React 18 | Component-based UI architecture |
+| **Styling** | Tailwind CSS 3.4 | Utility-first responsive design |
+| **Icons** | Lucide React | Consistent, lightweight SVG icons |
+| **Routing** | React Router 6 | Client-side navigation & protection |
+| **Build** | Vite 5 | Lightning-fast HMR and bundling |
+| **Storage** | localStorage | Offline-first data persistence |
+| **Services** | Vercel | Global edge deployment |
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+
+- Node.js (v18 or higher)
 - npm or yarn
 
-### Setup
+### Installation
+
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/Divya07-22/Placement-Kodnest.git
+    cd Placement-Kodnest
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Start the development server**
+    ```bash
+    npm run dev
+    ```
+
+4.  **Open in browser**
+    Navigate to `http://localhost:5173`
+
+---
+
+## 📱 Project Structure
 
 ```bash
-# Clone the repository
-git clone https://github.com/Divya07-22/Placement-Kodnest.git
-
-# Navigate to project directory
-cd Placement-Kodnest
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
+src/
+├── components/         # Reusable UI (Card, Button, Badge)
+├── layouts/           # Dashboard & Auth layouts
+├── pages/             # Route components
+│   ├── Assessments.jsx # Mock test cards
+│   ├── Dashboard.jsx   # Main analytics view
+│   ├── Practice.jsx    # JD Analyzer input
+│   ├── Profile.jsx     # User settings
+│   ├── Results.jsx     # Analysis output
+│   └── ...
+├── utils/             # Heuristic logic (analysisUtils.js)
+└── App.jsx            # Route definitions
 ```
-
-The application will be available at `http://localhost:5173`
-
-### Build for Production
-
-```bash
-npm run build
-npm run preview
-```
-
----
-
-## 🏗️ Project Structure
-
-```
-placement-readiness/
-├── src/
-│   ├── layouts/
-│   │   └── DashboardLayout.jsx    # Dashboard shell with sidebar
-│   ├── pages/
-│   │   ├── LandingPage.jsx        # Home page with hero & features
-│   │   ├── Dashboard.jsx          # Advanced dashboard with visualizations
-│   │   ├── Practice.jsx           # Practice problems (placeholder)
-│   │   ├── Assessments.jsx        # JD analysis input form
-│   │   ├── Results.jsx            # Analysis results display (NEW)
-│   │   ├── Resources.jsx          # History of saved analyses (NEW)
-│   │   ├── TestChecklist.jsx      # Verification System (NEW)
-│   │   ├── ShipLock.jsx           # Shipping Gate (NEW)
-│   │   ├── ProofPage.jsx          # Final Submission (NEW)
-│   │   └── Profile.jsx            # User profile (placeholder)
-│   ├── utils/
-│   │   └── analysisUtils.js       # JD analysis logic (NEW)
-│   ├── App.jsx                    # Router configuration
-│   ├── main.jsx                   # Entry point
-│   └── index.css                  # Tailwind directives
-├── tailwind.config.js             # Tailwind v3 configuration
-├── postcss.config.js              # PostCSS configuration
-├── vite.config.js                 # Vite configuration
-└── package.json                   # Dependencies
-```
-
----
-
-## 🛣️ Routes
-
-| Route | Component | Description |
-|-------|-----------|-------------|
-| `/` | LandingPage | Home page with hero and features |
-| `/dashboard` | Dashboard | Overview with visualizations |
-| `/dashboard/practice` | Practice | Coding challenges |
-| `/dashboard/assessments` | Assessments | JD analysis input form |
-| `/dashboard/results` | Results | Analysis results display (NEW) |
-| `/dashboard/resources` | Resources (History) | Saved analyses (NEW) |
-| `/prp/07-test` | TestChecklist | Verification Checklist |
-| `/prp/08-ship` | ShipLock | Shipping Gate/Lock Screen |
-| `/prp/proof` | ProofPage | Final Submission & Artifacts |
-| `/dashboard/profile` | Profile | User settings |
-
----
-
-## 🎯 JD Analysis System
-
-### How It Works
-
-1. **Input**: Paste job description with optional company and role
-2. **Analysis**: Heuristic keyword detection extracts skills
-3. **Scoring**: Calculate readiness score (0-100)
-4. **Planning**: Generate round-wise checklist and 7-day plan
-5. **Questions**: Create 10 likely interview questions
-6. **Save**: Store analysis in localStorage for future reference
-
-### Skill Categories
-
-- **Core CS**: DSA, OOP, DBMS, OS, Networks
-- **Languages**: Java, Python, JavaScript, TypeScript, C++, Go
-- **Web**: React, Next.js, Node.js, Express, REST, GraphQL
-- **Data**: SQL, MongoDB, PostgreSQL, MySQL, Redis
-- **Cloud/DevOps**: AWS, Azure, GCP, Docker, Kubernetes, CI/CD
-- **Testing**: Selenium, Cypress, Playwright, JUnit, PyTest
-
-### Readiness Score Calculation
-
-```
-Base Score: 35
-+ Categories Detected × 5 (max 30)
-+ Company Provided: 10
-+ Role Provided: 10
-+ JD Length > 800 chars: 10
-= Total Score (capped at 100)
-```
-
-### Sample JD Test
-
-```
-Company: Google
-Role: Software Engineer
-JD: We are looking for a Software Engineer with strong knowledge of DSA, 
-Java, React, Node.js, MongoDB, and AWS. Experience with Docker and 
-Kubernetes is a plus. Must know OOP, DBMS, and OS concepts.
-```
-
-**Expected Score**: 95/100
-- Base: 35
-- 6 categories: +30
-- Company: +10
-- Role: +10
-- Length: +10
-
----
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Visit [vercel.com/new](https://vercel.com/new)
-3. Import your repository
-4. Deploy with one click
-
-**Auto-deployment**: Every push to `main` branch triggers automatic deployment
-
-### Manual Build
-
-```bash
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-```
-
----
-
-## 🔧 Configuration
-
-### Tailwind Config
-```javascript
-theme: {
-  extend: {
-    colors: {
-      primary: 'hsl(245, 58%, 51%)',
-    },
-  },
-}
-```
-
-### localStorage Structure
-```javascript
-{
-  "jdHistory": [
-    {
-      "id": "timestamp",
-      "createdAt": "ISO date",
-      "company": "Company name",
-      "role": "Role title",
-      "jdText": "Full JD text",
-      "extractedSkills": { ... },
-      "readinessScore": 95,
-      "checklist": { ... },
-      "plan": [ ... ],
-      "questions": [ ... ]
-    }
-  ]
-}
-```
-
----
-
-## 📱 Responsive Design
-
-- **Mobile-first approach**: Optimized for all screen sizes
-- **Breakpoints**:
-  - Mobile: Single column layout
-  - Tablet: Adjusted spacing
-  - Desktop: 2-column grid for dashboard
-- **Touch-friendly**: Large tap targets for mobile users
-
----
-
-## 🎨 Icons
-
-Using [Lucide React](https://lucide.dev/) for consistent iconography:
-- **Navigation**: LayoutDashboard, Code, FileText, BookOpen, User
-- **Features**: Code, Video, TrendingUp
-- **Assessments**: Calendar, Clock, TrendingUp, BookOpen, Sparkles
-- **Actions**: ArrowLeft, CheckCircle, Target, Trash2
-
----
-
-## 🔄 Development Workflow
-
-```bash
-# Start dev server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-
-# Lint code
-npm run lint
-```
-
----
-
-## 📊 Technology Stack
-
-| Category | Technology |
-|----------|-----------|
-| **Frontend** | React 18.3 |
-| **Styling** | Tailwind CSS 3.x |
-| **Routing** | React Router DOM 7.x |
-| **Icons** | Lucide React |
-| **Build Tool** | Vite 7.x |
-| **Visualizations** | Custom SVG |
-| **Storage** | localStorage |
-| **Analysis** | Heuristic algorithms (no APIs) |
-
----
-
-## 🎓 Learning Outcomes
-
-This project demonstrates:
-- React component architecture
-- React Router for SPA navigation
-- Tailwind CSS for rapid UI development
-- Custom SVG animations and data visualizations
-- Responsive design patterns
-- localStorage for data persistence
-- Heuristic algorithms for text analysis
-- Git workflow and version control
-- Vercel deployment and CI/CD
-
----
-
-## 🧪 Testing
-
-### Manual Verification
-
-1. **Skill Extraction**: Analyze sample JD and verify skills detected
-2. **Readiness Score**: Test with minimal and complete JDs
-3. **History Persistence**: Refresh page and verify data persists
-4. **Multiple Analyses**: Create 3+ analyses and verify all saved
-5. **Empty State**: Clear localStorage and verify empty state
-6. **Delete**: Remove entries and verify persistence
-
-See [walkthrough.md](./walkthrough.md) for detailed test scenarios.
-
----
-
-## 📄 License
-
-MIT License - feel free to use this project for learning and development.
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
 
 ---
 
-## 📧 Contact
+## 📄 License
 
-For questions or feedback, please open an issue on GitHub.
-
----
-
-**Built with ❤️ for placement preparation**
-
-**Repository**: https://github.com/Divya07-22/Placement-Kodnest
-**Live Demo**: https://placement-kodnest.vercel.app
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-## 🎉 Recent Updates
-
-### v2.0 - JD Analysis System (Latest)
-- ✅ Heuristic skill extraction from job descriptions
-- ✅ Readiness score calculator (0-100)
-- ✅ Round-wise preparation checklist
-- ✅ 7-day adaptive study plan
-- ✅ 10 likely interview questions generator
-- ✅ localStorage history with persistence
-- ✅ Complete offline functionality
-- ✅ No external APIs required
-
-### v1.0 - Core Platform
-- ✅ Landing page with hero and features
-- ✅ Dashboard with visualizations
-- ✅ Circular progress indicators
-- ✅ Custom SVG radar charts
-- ✅ Weekly goals tracker
-- ✅ Responsive design
+**Built with ❤️ by [Divya07-22]**

@@ -58,8 +58,8 @@ const Assessments = () => {
                         </div>
 
                         <button className="w-full py-3 rounded-lg border border-gray-200 text-gray-700 font-bold hover:bg-gray-50 hover:border-gray-300 transition-all flex items-center justify-center gap-2"
-                            onClick={() => alert('Assessment module coming soon!')}>
-                            Start Test <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-5px] group-hover:translate-x-0" />
+                            onClick={() => alert('Demo Mode: Assessment module will be available in the next release.')}>
+                            Start {test.title} <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-5px] group-hover:translate-x-0" />
                         </button>
                     </div>
                 ))}

@@ -14,11 +14,11 @@ export default function DashboardLayout() {
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50 grid grid-cols-[256px_1fr]">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 grid grid-cols-[256px_1fr] transition-colors duration-200">
             {/* Sidebar */}
-            <aside className="bg-white border-r border-gray-200 flex flex-col h-screen sticky top-0">
+            <aside className="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col h-screen sticky top-0 transition-colors duration-200">
                 <div className="p-6">
-                    <h2 className="text-2xl font-bold text-indigo-700">Placement Prep</h2>
+                    <h2 className="text-2xl font-bold text-indigo-700 dark:text-indigo-400">Placement Prep</h2>
                 </div>
                 <nav className="px-4 space-y-2 flex-1 overflow-y-auto">
                     {navItems.map((item) => {
@@ -29,8 +29,8 @@ export default function DashboardLayout() {
                                 key={item.path}
                                 to={item.path}
                                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
-                                    ? 'bg-indigo-50 text-indigo-600 font-medium'
-                                    : 'text-gray-700 hover:bg-gray-100'
+                                    ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-medium'
+                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                                     }`}
                             >
                                 <Icon className="w-5 h-5" />
@@ -44,8 +44,8 @@ export default function DashboardLayout() {
             {/* Main Content */}
             <div className="flex flex-col min-w-0">
                 {/* Header */}
-                <header className="sticky top-0 z-40 bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
-                    <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
+                <header className="sticky top-0 z-40 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-8 py-4 flex items-center justify-between transition-colors duration-200">
+                    <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
                     <div className="flex items-center gap-4">
                         <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-semibold">
                             U
